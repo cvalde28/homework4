@@ -1,12 +1,11 @@
 <script setup>
   import Header from './components/Header.vue';
   import Balance from './components/Balance.vue';
-  import incomeExpense from './components/incomeExpense.vue';
+  import IncomeExpense from './components/incomeExpense.vue';
   import AddTransaction from './components/AddTransaction.vue';
   import TransactionList from './components/TransactionList.vue';
-
-  import {ref, computed} from 'vue'
-  import IncomeExpense from './components/incomeExpense.vue';
+  
+  import {ref, computed, onMounted} from 'vue';
 
   const transactions = ref([])
 
@@ -38,6 +37,7 @@
       text: transactionData.text,
       amount: transactionData.amount,
     })
+    saveToLocalStorage()
   }
 
   const gererateID = () =>{
@@ -46,7 +46,21 @@
 
   const handleDelete = (id) => {
     transactions.value = transactions.value.filter((x) => x.id !== id)
+    saveToLocalStorage()
   }
+
+  const saveToLocalStorage =() => {
+    localStorage.setItem('transactions', JSON.stringify(transactions.value))
+  }
+  
+  onMounted( () => {
+    const savedTransaction = JSON.parse(localStorage.getItem('transactions'))
+
+    if(savedTransaction){
+      transactions.value = savedTransactions
+    }
+  })
+
 </script>
 
 

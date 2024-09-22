@@ -1,10 +1,10 @@
 <script setup>
-    import { defineProps, defineEmits} from 'vue';
+    import { defineProps, defineEmits} from 'vue'
 
     const props = defineProps({
         transactions: {
             type: Array,
-            require, true,
+            require: true,
         }
     })
 
